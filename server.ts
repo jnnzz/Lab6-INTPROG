@@ -22,7 +22,11 @@ app.use(cors({origin: (origin, callback) => callback(null, true), credentials: t
 
 app.use('/accounts', accountsControler);
 
-app.use('api-docs', swaggerDocs);
+app.use('/api-docs', swaggerDocs);
+
+app.get('/', (_req, res) => {
+  res.json({ message: 'API is running' });
+});
 
 app.use(errorHandler);
 
