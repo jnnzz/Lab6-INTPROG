@@ -48,6 +48,8 @@ async function refreshToken({ token, ipAddress }: any) {
   const refreshToken = await getRefreshToken(token);
   const account = await refreshToken.getAccount();
 
+  if (!account) throw 'Invalid token';
+
   const newRefreshToken = generateRefreshToken(account, ipAddress);
   refreshToken.revoked = Date.now();
   refreshToken.revokedByIp = ipAddress;
@@ -202,7 +204,7 @@ function generateJwtToken(account: any) {
 
 function generateRefreshToken(account: any, ipAddress: any) {
   return new db.RefreshToken({
-      accountId: account.id,
+      AccountId: account.id,
       token: randomTokenString(),
       expires: new Date(Date.now() + 7*24*60*60*1000),
       createdByIp: ipAddress
