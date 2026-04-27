@@ -165,6 +165,9 @@ async function update(id: any, params: any) {
     params.passwordHash = await hash(params.password);
   }
 
+  delete params.password;
+  delete params.confirmPassword;
+
   Object.assign(account, params);
   account.updated = Date.now();
   await account.save();

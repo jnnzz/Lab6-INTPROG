@@ -186,19 +186,24 @@ function create(req: any, res: any, next: any) {
 
 function updateSchema(req: any, res: any, next: any) {
   const schemaRules: any = {
-    title: Joi.string().required(),
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    email: Joi.string().email().required(),
+    title: Joi.string().empty(''),
+    firstName: Joi.string().empty(''),
+    lastName: Joi.string().empty(''),
+    email: Joi.string().email().empty(''),
     password: Joi.string().min(6).empty(''),
     confirmPassword: Joi.string().valid(Joi.ref('password')).empty('')
   };
 
+  const allowedFields = ['title', 'firstName', 'lastName', 'email', 'password', 'confirmPassword'];
+
   if (req.user.role === Role.Admin) {
     schemaRules.role = Joi.string().valid(Role.Admin, Role.User).empty('');
+    allowedFields.push('role');
   }
 
-  const schema = Joi.object(schemaRules).with('password', 'confirmPassword');
+  const schema = Joi.object(schemaRules)
+    .with('password', 'confirmPassword')
+    .or(...allowedFields);
   validateRequest(req, next, schema);
 }
 
