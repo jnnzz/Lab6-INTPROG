@@ -7,7 +7,7 @@
     "start": "node dist/server.js",
     "start:dev": "nodemon --exec ts-node ./server.ts",
     "build": "tsc && node -e \"require('fs').copyFileSync('swagger.yaml','dist/swagger.yaml')\"",
-    "start:prod": "node dist/server.js",
+    "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
