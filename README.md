@@ -4,9 +4,9 @@ Full-stack authentication system backend built with **Node.js**, **Express 5**, 
 
 ## Live Deployment
 
-- **Live API**: `https://YOUR_RENDER_URL.onrender.com`
-- **Swagger Docs**: `https://YOUR_RENDER_URL.onrender.com/api-docs`
-- **Frontend App**: `https://YOUR_VERCEL_URL.vercel.app`
+- **Live API**: `https://lab6-intprog.onrender.com`
+- **Swagger Docs**: `https://lab6-intprog.onrender.com/api-docs`
+- **Frontend App**: `https://laroco-angular21-fullstack.vercel.app`
 
 ## Features
 
