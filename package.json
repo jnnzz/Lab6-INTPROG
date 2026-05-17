@@ -2,7 +2,7 @@
   "name": "intprog-api",
   "version": "1.0.0",
   "description": "IntProg backend API — Node.js/Express with MySQL",
-  "main": "server.ts",
+  "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
     "start:dev": "nodemon --exec ts-node ./server.ts",
@@ -37,5 +37,8 @@
     "prettier": "^3.8.3",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
