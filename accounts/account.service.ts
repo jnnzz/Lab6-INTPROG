@@ -1,4 +1,3 @@
-import config from '../config.json';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
@@ -6,8 +5,8 @@ import {Op} from 'sequelize';
 import sendEmail from '../_helpers/send-email';
 import db from '../_helpers/db';
 import Role from '../_helpers/role';
-import { get } from 'http';
-import { ref, send } from 'process';
+
+const jwtSecret = process.env.JWT_SECRET || 'CHANGE_ME';
 
 export default {
   authenticate, 
@@ -77,7 +76,8 @@ async function revokeToken({ token, ipAddress }: any) {
 
 async function register(params: any, origin: any) {
   if (await db.Account.findOne({ where: { email: params.email } })) {
-      return await sendAlreadyRegisteredEmail(params.email, origin);
+      try { await sendAlreadyRegisteredEmail(params.email, origin); } catch (e) { console.log('Email send failed (already registered):', e); }
+      return;
   } 
 
   const account = new db.Account(params);
@@ -89,7 +89,7 @@ async function register(params: any, origin: any) {
 
   await account.save();
 
-  await sendVerificationEmail(account, origin);
+  try { await sendVerificationEmail(account, origin); } catch (e) { console.log('Email send failed (verification):', e); }
 }
 
 async function verifyEmail({ token }: any) {
@@ -199,7 +199,7 @@ async function hash(password: any) {
 }
 
 function generateJwtToken(account: any) {
-  return jwt.sign({ sub: account.id, id: account.id }, config.secret, { expiresIn: '15m' });
+  return jwt.sign({ sub: account.id, id: account.id }, jwtSecret, { expiresIn: '15m' });
 }
 
 function generateRefreshToken(account: any, ipAddress: any) {

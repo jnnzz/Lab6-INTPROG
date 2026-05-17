@@ -1,11 +1,13 @@
 {
-  "name": "mysql-api",
+  "name": "intprog-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "IntProg backend API — Node.js/Express with MySQL",
+  "main": "server.ts",
   "scripts": {
     "start": "ts-node ./server.ts",
     "start:dev": "nodemon --exec ts-node ./server.ts",
+    "build": "tsc",
+    "start:prod": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,12 +19,14 @@
     "body-parser": "^2.2.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
     "express": "^5.2.1",
     "express-jwt": "^8.5.1",
     "joi": "^18.1.2",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.22.1",
     "nodemailer": "^8.0.5",
+    "resend": "^6.12.3",
     "sequelize": "^6.37.8",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
