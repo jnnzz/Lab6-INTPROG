@@ -2,9 +2,9 @@
   "name": "intprog-api",
   "version": "1.0.0",
   "description": "IntProg backend API — Node.js/Express with MySQL",
-  "main": "dist/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node server.js",
     "start:dev": "nodemon --exec ts-node ./server.ts",
     "build": "tsc && node -e \"require('fs').copyFileSync('swagger.yaml','dist/swagger.yaml')\"",
     "postinstall": "npm run build",
