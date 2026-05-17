@@ -4,9 +4,9 @@
   "description": "IntProg backend API — Node.js/Express with MySQL",
   "main": "server.ts",
   "scripts": {
-    "start": "ts-node ./server.ts",
+    "start": "node dist/server.js",
     "start:dev": "nodemon --exec ts-node ./server.ts",
-    "build": "tsc",
+    "build": "tsc && node -e \"require('fs').copyFileSync('swagger.yaml','dist/swagger.yaml')\"",
     "start:prod": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
