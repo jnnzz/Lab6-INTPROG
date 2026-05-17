@@ -9,15 +9,18 @@ export default db;
 initialize();
 
 async function initialize() {
-    // Read database config from environment variables (loaded by dotenv in server.ts)
     const host = process.env.DB_HOST || 'localhost';
     const port = Number(process.env.DB_PORT) || 3306;
     const user = process.env.DB_USER || 'root';
     const password = process.env.DB_PASS || '';
     const database = process.env.DB_NAME || 'node_mysql_api';
+    const useSSL = process.env.DB_SSL === 'true';
 
     // Create DB if it doesn't already exist
-    const connection = await mysql.createConnection({ host, port, user, password });
+    const connection = await mysql.createConnection({
+        host, port, user, password,
+        ssl: useSSL ? { rejectUnauthorized: true } : undefined
+    });
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
     await connection.end();
 
@@ -26,10 +29,13 @@ async function initialize() {
         host,
         port,
         dialect: 'mysql',
-        logging: process.env.NODE_ENV === 'production' ? false : console.log
+        logging: process.env.NODE_ENV === 'production' ? false : console.log,
+        dialectOptions: useSSL ? {
+            ssl: { rejectUnauthorized: true }
+        } : {}
     });
 
-    // Init models and add them to the exported db object
+    // Init models
     db.Account = accountModel(sequelize);
     db.RefreshToken = refreshTokenModel(sequelize);
 
