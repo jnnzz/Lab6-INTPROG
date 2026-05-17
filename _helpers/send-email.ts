@@ -13,7 +13,10 @@ const smtpOptions = {
     },
     tls: {
         rejectUnauthorized: false
-    }
+    },
+    connectionTimeout: 5000,
+    greetingTimeout: 5000,
+    socketTimeout: 10000
 };
 
 export default async function sendEmail({ to, subject, html, from = emailFrom }: any) {
