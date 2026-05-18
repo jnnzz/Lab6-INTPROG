@@ -229,9 +229,12 @@ function _delete(req: any, res: any, next: any) {
 }
 
 function setTokenCookie(res: any, token: any) {
-  const cookieOptions = {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const cookieOptions: any = {
     httpOnly: true,
-    expires: new Date(Date.now() + 7*24*60*60*1000)
+    expires: new Date(Date.now() + 7*24*60*60*1000),
+    secure: isProduction,        // required for HTTPS cross-origin (Vercel → Render)
+    sameSite: isProduction ? 'none' : 'lax'  // 'none' required for cross-site cookies
   };
   res.cookie('refreshToken', token, cookieOptions);
 }
